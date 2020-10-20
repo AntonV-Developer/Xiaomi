@@ -1,0 +1,75 @@
+#!/sbin/sh
+
+OUTFD=$2
+ZIP="$3"
+
+ui_print() {
+	until [ ! "$1" ]; do
+		echo -e "ui_print $1\nui_print" > /proc/self/fd/$OUTFD;
+		shift;
+	done;
+}
+
+ui_print "Mount cust..."
+umount /cust
+mount /cust
+
+ui_print "Cleaning/Extracting cust..."
+rm -rf /cust/*
+unzip $ZIP cust/* -d /cust;
+
+ui_print "Set permission..."
+chmod -R 644 /cust
+find /cust -type d -print0 |xargs -0 chmod 755
+chcon -R u:object_r:system_file:s0 /cust
+
+ui_print "Unmount cust..."
+umount /cust
+
+
+
+ui_print "Mount system..."
+umount /system_root
+mount /system_root
+
+ui_print "Mount vendor..."
+umount /vendor
+mount /vendor
+
+ui_print "Cleaning apps..."
+rm -rf /system_root/system/app/AnalyticsCore
+rm -rf /system_root/system/app/facebook-appmanager
+rm -rf /system_root/system/app/HybridAccessory
+rm -rf /system_root/system/app/HybridPlatform
+rm -rf /system_root/system/app/Joyose
+rm -rf /system_root/system/app/MiPicks
+rm -rf /system_root/system/app/MSA-Global
+rm -rf /system_root/system/app/Netflix_activation
+rm -rf /system_root/system/app/Stk
+rm -rf /system_root/system/data-app/MiCreditInStub
+rm -rf /system_root/system/priv-app/facebook-installer
+rm -rf /system_root/system/priv-app/facebook-services
+rm -rf /system_root/system/priv-app/GameCenterGlobal
+rm -rf /system_root/system/priv-app/MiDrop
+rm -rf /system_root/system/priv-app/MiService
+rm -rf /system_root/system/priv-app/wifibtrxtx
+rm -rf /system_root/system/priv-app/YellowPage
+rm -rf /system_root/system/product/app/Gmail2
+rm -rf /system_root/system/product/app/GoogleTTS
+rm -rf /system_root/system/product/app/Maps
+rm -rf /system_root/system/product/app/YouTube
+rm -rf /system_root/system/product/priv-app/Velvet
+rm -rf /system_root/system/product/priv-app/Wellbeing
+rm -rf /vendor/data-app/Drive
+rm -rf /vendor/data-app/Duo
+rm -rf /vendor/data-app/Miui_Fashiongallery_global_new
+rm -rf /vendor/data-app/Music2
+rm -rf /vendor/data-app/Photos
+rm -rf /vendor/data-app/Videos
+
+
+ui_print "Unmount system..."
+umount /system_root
+
+ui_print "Unmount vendor..."
+umount /vendor
