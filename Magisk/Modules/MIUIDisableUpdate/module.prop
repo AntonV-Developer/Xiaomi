@@ -1,0 +1,6 @@
+id=MIUIDisableUpdate
+name=MIUI Disable update
+version=1.0
+versionCode=1
+author=PC.Developer
+description=Блокировка поиска официальных обновлений MIUI
