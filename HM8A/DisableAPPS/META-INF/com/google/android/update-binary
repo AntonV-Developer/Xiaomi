@@ -14,18 +14,11 @@ ui_print "Mount cust..."
 umount /cust
 mount /cust
 
-ui_print "Cleaning/Extracting cust..."
+ui_print "Cleaning cust..."
 rm -rf /cust/*
-unzip $ZIP cust/* -d /cust;
-
-ui_print "Set permission..."
-chmod -R 644 /cust
-find /cust -type d -print0 |xargs -0 chmod 755
-chcon -R u:object_r:system_file:s0 /cust
 
 ui_print "Unmount cust..."
 umount /cust
-
 
 
 ui_print "Mount system..."
