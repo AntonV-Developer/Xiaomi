@@ -1,5 +1,12 @@
 #!/sbin/sh
 
+# ******************************************
+# Description:		Script for Cleaning APPS
+# Author:			PC.Developer
+# Date:				20 October 2020
+# Rom:				MIUI 11 Android 10
+# ******************************************
+
 OUTFD=$2
 ZIP="$3"
 
@@ -10,26 +17,35 @@ ui_print() {
 	done;
 }
 
-ui_print "Mount cust..."
+ui_print "************************************"
+ui_print "***     Cleaning APPS Script     ***"
+ui_print "***      MIUI 11 Android 10      ***"
+ui_print "***         PC.Developer         ***"
+ui_print "************************************"
+ui_print " "
+ui_print " "
+ui_print " "
+
+ui_print "- Mount cust..."
 umount /cust
 mount /cust
 
-ui_print "Cleaning cust..."
+ui_print "- Cleaning cust..."
 rm -rf /cust/*
 
-ui_print "Unmount cust..."
+ui_print "- Unmount cust..."
 umount /cust
 
 
-ui_print "Mount system..."
+ui_print "- Mount system..."
 umount /system_root
 mount /system_root
 
-ui_print "Mount vendor..."
+ui_print "- Mount vendor..."
 umount /vendor
 mount /vendor
 
-ui_print "Cleaning apps..."
+ui_print "- Cleaning apps..."
 rm -rf /system_root/system/app/AnalyticsCore
 rm -rf /system_root/system/app/facebook-appmanager
 rm -rf /system_root/system/app/HybridAccessory
@@ -38,11 +54,13 @@ rm -rf /system_root/system/app/Joyose
 rm -rf /system_root/system/app/MiPicks
 rm -rf /system_root/system/app/MSA-Global
 rm -rf /system_root/system/app/Netflix_activation
+rm -rf /system_root/system/app/Notes
 rm -rf /system_root/system/app/Stk
 rm -rf /system_root/system/data-app/MiCreditInStub
 rm -rf /system_root/system/priv-app/facebook-installer
 rm -rf /system_root/system/priv-app/facebook-services
 rm -rf /system_root/system/priv-app/GameCenterGlobal
+rm -rf /system_root/system/priv-app/GlobalMinusScreen
 rm -rf /system_root/system/priv-app/MiDrop
 rm -rf /system_root/system/priv-app/MiService
 rm -rf /system_root/system/priv-app/wifibtrxtx
@@ -53,16 +71,12 @@ rm -rf /system_root/system/product/app/Maps
 rm -rf /system_root/system/product/app/YouTube
 rm -rf /system_root/system/product/priv-app/Velvet
 rm -rf /system_root/system/product/priv-app/Wellbeing
-rm -rf /vendor/data-app/Drive
-rm -rf /vendor/data-app/Duo
-rm -rf /vendor/data-app/Miui_Fashiongallery_global_new
-rm -rf /vendor/data-app/Music2
-rm -rf /vendor/data-app/Photos
-rm -rf /vendor/data-app/Videos
 
 
-ui_print "Unmount system..."
+ui_print "- Unmount system..."
 umount /system_root
 
-ui_print "Unmount vendor..."
+ui_print "- Unmount vendor..."
 umount /vendor
+
+ui_print "- Finished cleaning!"
