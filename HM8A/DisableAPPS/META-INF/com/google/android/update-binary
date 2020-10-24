@@ -1,10 +1,10 @@
 #!/sbin/sh
 
 # ******************************************
-# Description:		Script for Cleaning APPS
-# Author:			PC.Developer
-# Date:				20 October 2020
-# Rom:				MIUI 11 Android 10
+# Description:	Script for Cleaning APPS
+# Author:		PC.Developer
+# Date:			20 October 2020
+# Rom:			MIUI 11 Android 10
 # ******************************************
 
 OUTFD=$2
