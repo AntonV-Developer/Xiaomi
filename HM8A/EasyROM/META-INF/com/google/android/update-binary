@@ -1,11 +1,10 @@
 #!/sbin/sh
 
-# ******************************************
-# Description:	Script for Easy ROM
-# Author:		PC.Developer
-# Date:			20 October 2020
-# Rom:			MIUI 11 Android 10
-# ******************************************
+# *********************************
+# Author: PC.Developer
+# Rom: MIUI 11 Android 10
+# Description: Script for Easy ROM
+# *********************************
 
 OUTFD=$2
 ZIP="$3"
