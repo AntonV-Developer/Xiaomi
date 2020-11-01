@@ -1,0 +1,125 @@
+#!/sbin/sh
+
+# *********************************
+# Author: PC.Developer
+# Rom: MIUI 11 Android 10
+# Description: Script for Lite ROM
+# *********************************
+
+OUTFD=$2
+ZIP="$3"
+
+ui_print() {
+	until [ ! "$1" ]; do
+		echo -e "ui_print $1\nui_print" > /proc/self/fd/$OUTFD;
+		shift;
+	done;
+}
+
+ui_print " "
+ui_print " "
+ui_print "************************************"
+ui_print "***       Lite ROM  Script       ***"
+ui_print "***      MIUI 11 Android 10      ***"
+ui_print "***         PC.Developer         ***"
+ui_print "***             HM8A             ***"
+ui_print "************************************"
+ui_print " "
+ui_print " "
+ui_print " "
+sleep 2
+
+#		Очистка cust
+
+ui_print "- Mount cust..."
+umount /cust
+mount /cust
+
+ui_print "- Cleaning cust..."
+rm -rf /cust/*
+
+ui_print "- Unmount cust..."
+umount /cust
+
+#		Удаление предустановленых приложений
+
+ui_print "- Mount system..."
+umount /system_root
+mount /system_root
+
+ui_print "- Cleaning apps..."
+rm -rf /system_root/system/app/AnalyticsCore
+rm -rf /system_root/system/app/BookmarkProvider
+rm -rf /system_root/system/app/facebook-appmanager
+rm -rf /system_root/system/app/HybridAccessory
+rm -rf /system_root/system/app/HybridPlatform
+rm -rf /system_root/system/app/InMipay
+rm -rf /system_root/system/app/Joyose
+rm -rf /system_root/system/app/MiPicks
+rm -rf /system_root/system/app/MiuiBugReport
+rm -rf /system_root/system/app/MSA-Global
+rm -rf /system_root/system/app/Netflix_activation
+rm -rf /system_root/system/app/Notes
+rm -rf /system_root/system/app/Stk
+rm -rf /system_root/system/app/VsimCore
+rm -rf /system_root/system/data-app/MiCreditInStub
+rm -rf /system_root/system/data-app/MiDrive
+rm -rf /system_root/system/priv-app/facebook-installer
+rm -rf /system_root/system/priv-app/facebook-services
+rm -rf /system_root/system/priv-app/GameCenterGlobal
+rm -rf /system_root/system/priv-app/MiDrop
+rm -rf /system_root/system/priv-app/MiService
+rm -rf /system_root/system/priv-app/PartnerBookmarksProvider
+rm -rf /system_root/system/priv-app/wifibtrxtx
+rm -rf /system_root/system/priv-app/YellowPage
+rm -rf /system_root/system/product/app/Gmail2
+rm -rf /system_root/system/product/app/GoogleTTS
+rm -rf /system_root/system/product/app/Maps
+rm -rf /system_root/system/product/app/YouTube
+rm -rf /system_root/system/product/priv-app/AndroidAutoStub
+rm -rf /system_root/system/product/priv-app/Velvet
+rm -rf /system_root/system/product/priv-app/Wellbeing
+
+ui_print "- Unmount system..."
+umount /system_root
+
+#		Очистка кеша
+
+ui_print "- Cleaning all cache..."
+rm -rf /data/magisk_backup_*
+rm -rf /data/resource-cache/*
+rm -rf /data/system/package_cache/*
+rm -rf /data/dalvick-cache/*
+rm -rf /cache/*
+
+ui_print "- Cleaning finished..."
+
+sleep 2
+
+#		Конфигурация системы
+
+ui_print "- Configuring android system..."
+mount /system_root
+
+echo "" >> /system_root/system/build.prop
+echo "# ADDED SCRIPT PC.Developer" >> /system_root/system/build.prop
+echo "" >> /system_root/system/build.prop
+echo "" >> /system_root/system/build.prop
+echo "persist.adb.notify=0" >> /system_root/system/build.prop	# Отключение уведомления о usb отладке
+echo "ro.config.media_vol_steps=30" >> /system_root/system/build.prop	# Кол-во шагов громкости медиа
+echo "ro.config.vc_call_vol_steps=15" >> /system_root/system/build.prop	# Кол-во шагов громкости голосовых вызовов
+echo "audio.safemedia.bypass=true" >> /system_root/system/build.prop	# Отключение сообщения о превышении порога громкости
+echo "logcat.live=disable" >> /system_root/system/build.prop	# Отключение различных системных логов
+echo "persist.vendor.ssr.enable_ramdumps=0" >> /system_root/system/build.prop	# Отключение логов модема
+echo "ro.media.enc.jpeg.quality=100" >> /system_root/system/build.prop	# Качество при съёмке фото
+echo "ro.ril.enable.amr.wideband=1" >> /system_root/system/build.prop	# Улучшение качества речи при голосовых вызовах
+echo "wifi.supplicant_scan_interval=180" >> /system_root/system/build.prop	# Интервал автосканирования доступных Wi-Fi-сетей
+echo "persist.sys.usb.config=mtp,adb" >> /system_root/system/build.prop	# USB отладка включена по умолчанию
+
+for file in $(grep -s "ro.system.build.version.incremental" /system_root/system/build.prop | cut -d "." -f9); do
+    sed -i 's/'"$file"'/LITEROM/g' /system_root/system/build.prop
+   done
+
+umount /system_root
+
+ui_print "- Done..."
